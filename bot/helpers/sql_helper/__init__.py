@@ -8,15 +8,20 @@ from bot import DATABASE_URL, LOGGER
 from pymongo import MongoClient
 from bot import DATABASE_URL, LOGGER
 
+
+
 def start():
     try:
+        # Initialize the MongoDB client
         client = MongoClient("mongodb+srv://premiumbot:premiumbot@cluster0.5siafyp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-        db = client.get_default_database()  # Gets the default database
+        # Access the desired database
+        db = client['dvdv']  # Replace with your actual database name
         return db
     except Exception as e:
-        LOGGER.error(f'Error connecting to the database: {e}')
+        LOGGER.error(f'Failed to connect to the database: {e}')
         exit(1)
 
+# Start the database connection
 DATABASE = start()
 
 
