@@ -5,15 +5,20 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from bot import DATABASE_URL, LOGGER
 
 
-def start() -> scoped_session:
-  try:
-    engine = create_engine("mongodb+srv://premiumbot:premiumbot@cluster0.5siafyp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-    BASE.metadata.bind = engine
-    BASE.metadata.create_all(engine)
-    return scoped_session(sessionmaker(bind=engine, autoflush=False))
-  except ValueError:
-    LOGGER.error('Invalid DATABASE_URL : Exiting now.')
-    exit(1)
+from pymongo import MongoClient
+from bot import DATABASE_URL, LOGGER
+
+def start():
+    try:
+        client = MongoClient("mongodb+srv://premiumbot:premiumbot@cluster0.5siafyp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+        db = client.get_default_database()  # Gets the default database
+        return db
+    except Exception as e:
+        LOGGER.error(f'Error connecting to the database: {e}')
+        exit(1)
+
+DATABASE = start()
+
 
 
 BASE = declarative_base()
