@@ -26,7 +26,7 @@ async def mmsub(bot, message):
     if os.path.exists(str(user_id) + ".txt"):
       os.remove(str(user_id) + ".txt")
     for page in pages: 
-      page = requests.get("https://channelmyanmar.org/movies/page/" + str(page), headers=headers)
+      page = requests.get("https://channelmyanmar.to/movies/page/" + str(page), headers=headers)
       soup = BeautifulSoup(page.text, 'html.parser')
       movie_div = soup.find_all('div', class_='boxinfo')
       sleep(randint(2,10))
